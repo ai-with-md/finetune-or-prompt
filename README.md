@@ -54,6 +54,7 @@ To rerun the models themselves (Python 3.12; saved predictions are already in `r
 python3.12 -m venv .venv-train
 .venv-train/bin/pip install -r requirements-train.txt -e .
 .venv-train/bin/python scripts/frozen_baseline.py   # about a minute on an Apple M4
+.venv-train/bin/python scripts/finetune.py          # about 2.5 hours on an Apple M4 GPU; resumes if stopped
 ```
 
 ## License

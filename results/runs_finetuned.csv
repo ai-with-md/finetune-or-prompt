@@ -1,0 +1,16 @@
+approach,model,n_per_class,seed,n_train,lr,epochs,steps,train_seconds,val_acc,test_acc,device,date
+finetuned,answerdotai/ModernBERT-base,5,0,385,0.0002,39,507,645.6,0.6102,0.6302,mps,2026-11-16
+finetuned,answerdotai/ModernBERT-base,10,0,770,0.0002,20,500,1152.5,0.7637,0.7818,mps,2026-11-16
+finetuned,answerdotai/ModernBERT-base,25,0,1925,0.0002,9,549,726.1,0.8674,0.8695,mps,2026-11-16
+finetuned,answerdotai/ModernBERT-base,50,0,3818,0.0002,5,600,1001.7,0.9153,0.912,mps,2026-11-16
+finetuned,answerdotai/ModernBERT-base,all,0,9000,0.0002,4,1128,1620.8,0.9372,0.9312,mps,2026-11-16
+finetuned,answerdotai/ModernBERT-base,5,1,385,0.0002,39,507,340.3,0.6271,0.6416,mps,2026-11-16
+finetuned,answerdotai/ModernBERT-base,10,1,770,0.0002,20,500,333.7,0.8026,0.7948,mps,2026-11-16
+finetuned,answerdotai/ModernBERT-base,25,1,1925,0.0002,9,549,396.5,0.8764,0.8847,mps,2026-11-16
+finetuned,answerdotai/ModernBERT-base,50,1,3818,0.0002,5,600,427.1,0.9103,0.9107,mps,2026-11-16
+finetuned,answerdotai/ModernBERT-base,all,1,9000,0.0002,4,1128,851.9,0.9312,0.938,mps,2026-11-16
+finetuned,answerdotai/ModernBERT-base,5,2,385,0.0002,39,507,353.0,0.653,0.6896,mps,2026-11-16
+finetuned,answerdotai/ModernBERT-base,10,2,770,0.0002,20,500,385.4,0.7717,0.787,mps,2026-11-16
+finetuned,answerdotai/ModernBERT-base,25,2,1925,0.0002,9,549,424.0,0.8714,0.8834,mps,2026-11-16
+finetuned,answerdotai/ModernBERT-base,50,2,3818,0.0002,5,600,468.7,0.9043,0.9214,mps,2026-11-16
+finetuned,answerdotai/ModernBERT-base,all,2,9000,0.0002,4,1128,878.4,0.9332,0.9357,mps,2026-11-16
