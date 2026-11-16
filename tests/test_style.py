@@ -22,3 +22,16 @@ def test_headline_and_save(tmp_path, monkeypatch):
     style.save(fig, "check")
     plt.close(fig)
     assert (tmp_path / "check.png").stat().st_size > 0
+
+
+def test_learning_curve_plot_runs(tmp_path):
+    import pandas as pd
+
+    from fopstudy import plots
+
+    summary = pd.DataFrame({"approach": "frozen", "n_per_class": [5, "all"], "x": [5.0, 117.0],
+                            "accuracy": [0.8, 0.9], "low": [0.78, 0.89], "high": [0.82, 0.91],
+                            "seed_accuracies": [[0.79, 0.81], [0.9]]})
+    fig, ax = plots.learning_curve([summary])
+    assert ax.get_xscale() == "log"
+    plt.close(fig)
