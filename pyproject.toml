@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fopstudy"
+version = "0.1.0"
+description = "Study: when does fine-tuning a small model pay off compared with prompting a large hosted model?"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [{name = "Meenal Asesh"}]
+requires-python = ">=3.9"
+dependencies = [
+    "pandas>=2.0",
+    "numpy>=1.24",
+    "matplotlib>=3.7",
+    "pyarrow>=14",
+]
+
+[project.urls]
+Homepage = "https://github.com/ai-with-md/finetune-or-prompt"
+
+[project.optional-dependencies]
+notebooks = ["jupyter", "nbformat", "nbconvert", "ipykernel"]
+dev = ["pytest"]
+
+[tool.setuptools]
+packages = ["fopstudy"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

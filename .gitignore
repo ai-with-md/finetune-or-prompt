@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.venv-train/
+.ipynb_checkpoints/
+.pytest_cache/
+
+# Secrets
+.env
+
+# Data is downloaded by scripts/download_data.py, not committed
+data/
+
+# Model weights and training checkpoints are never committed
+models/
+checkpoints/
+*.safetensors
+*.bin
+*.pt
+
+# OS
+.DS_Store
+
+# Website built by scripts/build_site.py
+site/
