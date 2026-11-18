@@ -26,3 +26,12 @@ def test_available_runs(tmp_path):
 def test_lengths_must_match(tmp_path):
     with pytest.raises(ValueError):
         save_predictions("frozen", 5, 0, [1, 2], [1], results_dir=tmp_path)
+    with pytest.raises(ValueError):
+        save_predictions("frozen", 5, 0, [1, 2], [1, 2], rows=[7], results_dir=tmp_path)
+
+
+def test_subset_rows_are_kept(tmp_path):
+    save_predictions("sonnet", 0, 0, [4, 5], [4, -1], rows=[40, 12], results_dir=tmp_path)
+    df = load_predictions("sonnet", 0, 0, results_dir=tmp_path)
+    assert list(df["row"]) == [40, 12]
+    assert list(df["correct"]) == [True, False]

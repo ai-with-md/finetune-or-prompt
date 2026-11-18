@@ -1,4 +1,5 @@
-# Separate environment for running models locally (Python 3.12 on an Apple M4 Mac).
+# Separate environment for running models locally and calling the Claude API
+# (Python 3.12 on an Apple M4 Mac).
 # Not used by the tests or CI. Set up with:
 #   python3.12 -m venv .venv-train && .venv-train/bin/pip install -r requirements-train.txt -e .
 torch==2.15.0
@@ -6,3 +7,4 @@ transformers==5.23.0
 scikit-learn==1.9.1
 pandas
 pyarrow
+anthropic==2.9.0

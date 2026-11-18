@@ -23,13 +23,18 @@ def prediction_path(approach: str, n_per_class: Size, seed: int,
 
 
 def save_predictions(approach: str, n_per_class: Size, seed: int, labels, preds,
-                     results_dir: Path = RESULTS_DIR) -> Path:
+                     results_dir: Path = RESULTS_DIR, rows=None) -> Path:
+    """Save one run. `rows` are test-set positions; default is every test message in order.
+
+    A prediction of -1 means the model gave no valid intent; it counts as wrong.
+    """
     labels, preds = list(labels), list(preds)
-    if len(labels) != len(preds):
-        raise ValueError("labels and preds must have the same length")
+    rows = list(range(len(labels))) if rows is None else list(rows)
+    if not len(labels) == len(preds) == len(rows):
+        raise ValueError("labels, preds and rows must have the same length")
     path = prediction_path(approach, n_per_class, seed, results_dir)
     path.parent.mkdir(parents=True, exist_ok=True)
-    pd.DataFrame({"row": range(len(labels)), "label": labels, "pred": preds}).to_csv(path, index=False)
+    pd.DataFrame({"row": rows, "label": labels, "pred": preds}).to_csv(path, index=False)
     return path
 
 

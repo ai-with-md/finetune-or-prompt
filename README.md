@@ -57,6 +57,14 @@ python3.12 -m venv .venv-train
 .venv-train/bin/python scripts/finetune.py          # about 2.5 hours on an Apple M4 GPU; resumes if stopped
 ```
 
+The hosted models need an Anthropic API key in a `.env` file in the repo root (`ANTHROPIC_API_KEY=...`; the file is ignored by git). Every answer is saved as it arrives, so a stopped run resumes without paying twice, and spending stops before a $15 cap:
+
+```bash
+.venv-train/bin/python scripts/run_api.py --dry-run   # the plan and its cost, no paid calls
+.venv-train/bin/python scripts/run_api.py --pilot     # 50 messages, checks the prompt cache works
+.venv-train/bin/python scripts/run_api.py             # all six runs, about $3
+```
+
 ## License
 
 Code: MIT. Banking77: CC BY 4.0, by PolyAI.
