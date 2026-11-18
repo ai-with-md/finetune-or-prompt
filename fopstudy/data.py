@@ -77,3 +77,29 @@ def validation_split(df: pd.DataFrame, fraction: float = 0.1, seed: int = 0,
     held = [i for idx in order.values() for i in idx[:max(1, round(fraction * len(idx)))]]
     val = df.loc[held]
     return df.drop(index=held), val
+
+
+def contrastive_pairs(labels, iterations: int = 20, seed: int = 0) -> np.ndarray:
+    """Pairs of training examples for contrastive fine-tuning, as in SetFit.
+
+    For every example, `iterations` times over: one pair with another example
+    of the same class (target 1) and one with an example of a different class
+    (target 0). Returns rows of (index_a, index_b, target), shuffled, where the
+    indices are positions in `labels`. Classes with one example get no
+    positive pairs.
+    """
+    labels = np.asarray(labels)
+    rng = np.random.default_rng(seed)
+    by_class = {c: np.flatnonzero(labels == c) for c in np.unique(labels)}
+    pairs = []
+    for _ in range(iterations):
+        for i, c in enumerate(labels):
+            same = by_class[c][by_class[c] != i]
+            if len(same):
+                pairs.append((i, rng.choice(same), 1))
+            other = rng.integers(len(labels))
+            while labels[other] == c:
+                other = rng.integers(len(labels))
+            pairs.append((i, other, 0))
+    pairs = np.array(pairs)
+    return pairs[rng.permutation(len(pairs))]

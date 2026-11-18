@@ -26,7 +26,9 @@ This study measures all three on the same test messages and turns the results in
 | [02](notebooks/02_finetune_vs_prompt.ipynb) | Does a fine-tuned small model beat a prompted large one on the same messages? | Done |
 | [03](notebooks/03_learning_curve.ipynb) | How many labelled examples does fine-tuning need to catch up? | Done |
 | [04](notebooks/04_cost_and_speed.ipynb) | What does each option cost per 1,000 requests, and how fast is it? | Done |
-| 05 | At what monthly volume does fine-tuning pay off, and when does the answer flip? | Next |
+| [05](notebooks/05_break_even.ipynb) | At what monthly volume does fine-tuning pay off, and when does the answer flip? | Done |
+
+The findings, and when to choose which option, are summarised in a one-page [decision memo](docs/decision_memo.md).
 
 ## How the study is run
 
@@ -55,6 +57,7 @@ python3.12 -m venv .venv-train
 .venv-train/bin/pip install -r requirements-train.txt -e .
 .venv-train/bin/python scripts/frozen_baseline.py   # about a minute on an Apple M4
 .venv-train/bin/python scripts/finetune.py          # about 2.5 hours on an Apple M4 GPU; resumes if stopped
+.venv-train/bin/python scripts/contrastive_finetune.py   # the SetFit recipe at small sizes, about an hour
 ```
 
 The hosted models need an Anthropic API key in a `.env` file in the repo root (`ANTHROPIC_API_KEY=...`; the file is ignored by git). Every answer is saved as it arrives, so a stopped run resumes without paying twice, and spending stops before a $15 cap:
@@ -63,6 +66,7 @@ The hosted models need an Anthropic API key in a `.env` file in the repo root (`
 .venv-train/bin/python scripts/run_api.py --dry-run   # the plan and its cost, no paid calls
 .venv-train/bin/python scripts/run_api.py --pilot     # 50 messages, checks the prompt cache works
 .venv-train/bin/python scripts/run_api.py             # all six runs, about $3
+.venv-train/bin/python scripts/run_api.py --retrieved # two runs with each message's 10 nearest labelled examples, about $1.70
 ```
 
 ## License

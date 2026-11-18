@@ -36,14 +36,22 @@ INSTRUCTIONS = (
 
 @dataclass(frozen=True)
 class Config:
-    """One prompted run: a model shown `shots` labelled examples of each intent."""
+    """One prompted run.
+
+    Either a fixed set of `shots` labelled examples of each intent in the
+    system prompt, or, with `retrieved`, that many labelled examples chosen for
+    each message: the training messages most similar to it.
+    """
 
     model: str
     shots: int
     test_per_class: Optional[int] = None  # None: the whole test set
+    retrieved: int = 0
 
     @property
     def name(self) -> str:
+        if self.retrieved:
+            return f"{self.model}_retrieved{self.retrieved}"
         return f"{self.model}_shots{self.shots}"
 
 
@@ -68,8 +76,27 @@ def _one_line(text: str) -> str:
     return " ".join(str(text).split())
 
 
-def user_message(text: str) -> str:
-    return f"Customer message: {_one_line(text)}"
+def user_message(text: str, examples: Optional[list[tuple[str, str]]] = None) -> str:
+    """The part of a request that changes every time: the message, after any retrieved examples.
+
+    `examples` are (text, intent name) pairs, shown in the order given.
+    """
+    message = f"Customer message: {_one_line(text)}"
+    if not examples:
+        return message
+    lines = "\n".join(f'- "{_one_line(t)}": {intent}' for t, intent in examples)
+    return f"Labelled examples of similar messages:\n{lines}\n\n{message}"
+
+
+def nearest_examples(query: np.ndarray, pool: np.ndarray, k: int) -> np.ndarray:
+    """Positions in `pool` of the k rows most similar to each query row, most similar last.
+
+    Rows are L2-normalised embeddings, so the dot product is the cosine similarity.
+    The most similar example goes last, nearest the message it is meant to help with.
+    """
+    scores = np.atleast_2d(query) @ pool.T
+    top = np.argsort(-scores, axis=1, kind="stable")[:, :k]
+    return top[:, ::-1]
 
 
 def answer_schema(labels: list[str]) -> dict:

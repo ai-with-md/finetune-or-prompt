@@ -1,0 +1,131 @@
+row,matches_label,other_answer,verdict
+79,sonnet,finetuned,label only
+129,finetuned,sonnet,both defensible
+148,finetuned,sonnet,both defensible
+162,finetuned,sonnet,both defensible
+186,sonnet,finetuned,label only
+247,sonnet,finetuned,both defensible
+268,finetuned,sonnet,other answer better
+282,finetuned,sonnet,both defensible
+284,finetuned,sonnet,both defensible
+301,sonnet,finetuned,label only
+305,finetuned,sonnet,both defensible
+308,finetuned,sonnet,label only
+310,finetuned,sonnet,both defensible
+339,sonnet,finetuned,label only
+377,finetuned,sonnet,other answer better
+416,finetuned,sonnet,both defensible
+428,finetuned,sonnet,both defensible
+534,sonnet,finetuned,both defensible
+537,finetuned,sonnet,other answer better
+542,finetuned,sonnet,both defensible
+551,sonnet,finetuned,label only
+599,finetuned,sonnet,both defensible
+601,finetuned,sonnet,both defensible
+602,finetuned,sonnet,both defensible
+613,finetuned,sonnet,both defensible
+617,finetuned,sonnet,both defensible
+636,sonnet,finetuned,both defensible
+637,finetuned,sonnet,both defensible
+640,finetuned,sonnet,other answer better
+699,sonnet,finetuned,label only
+763,sonnet,finetuned,both defensible
+828,finetuned,sonnet,both defensible
+861,finetuned,sonnet,both defensible
+869,finetuned,sonnet,other answer better
+878,finetuned,sonnet,both defensible
+881,finetuned,sonnet,both defensible
+901,finetuned,sonnet,both defensible
+908,sonnet,finetuned,both defensible
+945,sonnet,finetuned,label only
+962,sonnet,finetuned,both defensible
+980,sonnet,finetuned,label only
+1020,finetuned,sonnet,both defensible
+1054,finetuned,sonnet,both defensible
+1112,sonnet,finetuned,both defensible
+1114,sonnet,finetuned,label only
+1204,sonnet,finetuned,label only
+1240,finetuned,sonnet,both defensible
+1332,sonnet,finetuned,both defensible
+1337,finetuned,sonnet,other answer better
+1340,sonnet,finetuned,both defensible
+1341,finetuned,sonnet,other answer better
+1343,finetuned,sonnet,both defensible
+1349,finetuned,sonnet,both defensible
+1360,finetuned,sonnet,both defensible
+1421,sonnet,finetuned,both defensible
+1431,sonnet,finetuned,label only
+1488,finetuned,sonnet,both defensible
+1489,finetuned,sonnet,both defensible
+1493,finetuned,sonnet,both defensible
+1498,finetuned,sonnet,both defensible
+1499,finetuned,sonnet,both defensible
+1501,finetuned,sonnet,both defensible
+1594,sonnet,finetuned,label only
+1676,sonnet,finetuned,label only
+1689,finetuned,sonnet,label only
+1735,finetuned,sonnet,other answer better
+1792,finetuned,sonnet,both defensible
+1794,sonnet,finetuned,label only
+1796,finetuned,sonnet,both defensible
+1801,finetuned,sonnet,both defensible
+1822,sonnet,finetuned,label only
+1834,sonnet,finetuned,both defensible
+1835,finetuned,sonnet,both defensible
+1851,finetuned,sonnet,other answer better
+1879,finetuned,sonnet,other answer better
+1922,sonnet,finetuned,label only
+2044,sonnet,finetuned,both defensible
+2045,sonnet,finetuned,both defensible
+2105,finetuned,sonnet,other answer better
+2114,finetuned,sonnet,both defensible
+2117,finetuned,sonnet,both defensible
+2160,finetuned,sonnet,other answer better
+2163,finetuned,sonnet,both defensible
+2167,finetuned,sonnet,both defensible
+2169,finetuned,sonnet,both defensible
+2176,finetuned,sonnet,other answer better
+2181,finetuned,sonnet,both defensible
+2185,finetuned,sonnet,label only
+2196,finetuned,sonnet,both defensible
+2198,finetuned,sonnet,label only
+2204,sonnet,finetuned,both defensible
+2212,sonnet,finetuned,both defensible
+2215,finetuned,sonnet,other answer better
+2234,finetuned,sonnet,other answer better
+2236,finetuned,sonnet,both defensible
+2263,finetuned,sonnet,other answer better
+2266,finetuned,sonnet,both defensible
+2306,finetuned,sonnet,label only
+2313,sonnet,finetuned,both defensible
+2323,finetuned,sonnet,both defensible
+2364,sonnet,finetuned,both defensible
+2426,sonnet,finetuned,label only
+2466,finetuned,sonnet,both defensible
+2468,sonnet,finetuned,label only
+2480,finetuned,sonnet,both defensible
+2483,finetuned,sonnet,both defensible
+2495,finetuned,sonnet,other answer better
+2510,finetuned,sonnet,both defensible
+2511,finetuned,sonnet,other answer better
+2515,finetuned,sonnet,other answer better
+2526,sonnet,finetuned,both defensible
+2575,finetuned,sonnet,other answer better
+2579,finetuned,sonnet,other answer better
+2580,sonnet,finetuned,label only
+2597,finetuned,sonnet,other answer better
+2604,finetuned,sonnet,other answer better
+2653,sonnet,finetuned,both defensible
+2657,sonnet,finetuned,both defensible
+2663,finetuned,sonnet,both defensible
+2688,finetuned,sonnet,both defensible
+2724,finetuned,sonnet,both defensible
+2748,finetuned,sonnet,both defensible
+2764,sonnet,finetuned,both defensible
+2835,finetuned,sonnet,other answer better
+2921,finetuned,sonnet,other answer better
+2948,finetuned,sonnet,other answer better
+2956,finetuned,sonnet,both defensible
+2988,finetuned,sonnet,label only
+3012,sonnet,finetuned,label only
+3024,sonnet,finetuned,both defensible

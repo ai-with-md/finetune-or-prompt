@@ -2,9 +2,10 @@
 
 import math
 
+import numpy as np
 import pytest
 
-from fopstudy.costs import (PRICES, TokenPrice, api_cost_per_1k, break_even_volume,
+from fopstudy.costs import (PRICES, Option, TokenPrice, api_cost_per_1k, break_even_volume, cheapest,
                             error_cost_to_break_even, monthly_cost, request_cost, server_capacity,
                             server_monthly_cost)
 
@@ -95,3 +96,22 @@ def test_server_month_and_capacity():
     assert server_capacity(10, slowdown=2, utilisation=0.5) == pytest.approx(65_700_000)
     with pytest.raises(ValueError):
         server_capacity(10, utilisation=0)
+
+
+def test_option_bill_matches_monthly_cost():
+    o = Option("hosted", per_1k=1.0, fixed_monthly=50, error_rate=0.1)
+    assert o.monthly(200, 0.5) == pytest.approx(monthly_cost(200, 1.0, 50, 0.1, 0.5))
+    assert o.monthly([0, 1000]).tolist() == pytest.approx([50, 51])
+    with pytest.raises(ValueError):
+        o.monthly(-1)
+
+
+def test_cheapest_flips_at_the_break_even_volume():
+    hosted = Option("hosted", per_1k=0.5, fixed_monthly=0, error_rate=0.10)
+    self_hosted = Option("self-hosted", per_1k=0.0, fixed_monthly=500, error_rate=0.05)
+    v = break_even_volume(0.5, 500, api_error_rate=0.10, selfhost_error_rate=0.05, cost_per_error=0.01)
+    picks = cheapest([hosted, self_hosted], [v * 0.9, v * 1.1], 0.01)
+    assert picks.tolist() == [0, 1]
+    # A grid of volumes by error costs comes back in the same shape.
+    grid = cheapest([hosted, self_hosted], np.array([[1e3], [1e7]]), np.array([0.0, 1.0]))
+    assert grid.tolist() == [[0, 0], [1, 1]]

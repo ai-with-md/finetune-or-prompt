@@ -2,6 +2,7 @@
 
 import json
 
+import numpy as np
 import pandas as pd
 import pytest
 
@@ -83,3 +84,19 @@ def test_worst_case_is_the_uncached_price():
 
 def test_every_model_has_an_id_and_a_thinking_setting():
     assert set(prompting.MODEL_IDS) == set(prompting.THINKING) == set(PRICES)
+
+
+def test_retrieved_examples_go_before_the_message():
+    assert prompting.user_message("Hi  there") == "Customer message: Hi there"
+    msg = prompting.user_message("Where is it?", [("Card  not here", "card_arrival"), ("Rate?", "exchange_rate")])
+    assert msg == ('Labelled examples of similar messages:\n- "Card not here": card_arrival\n'
+                   '- "Rate?": exchange_rate\n\nCustomer message: Where is it?')
+    assert prompting.Config("sonnet", 0, 20, retrieved=10).name == "sonnet_retrieved10"
+    assert prompting.Config("sonnet", 5, 20).name == "sonnet_shots5"
+
+
+def test_nearest_examples_most_similar_last():
+    pool = np.array([[1.0, 0.0], [0.0, 1.0], [0.6, 0.8], [0.8, 0.6]])
+    top = prompting.nearest_examples(np.array([1.0, 0.0]), pool, k=3)
+    assert top.tolist() == [[2, 3, 0]]
+    assert prompting.nearest_examples(pool[:2], pool, k=1).tolist() == [[0], [1]]

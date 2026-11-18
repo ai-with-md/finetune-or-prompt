@@ -16,6 +16,8 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass
 
+import numpy as np
+
 
 @dataclass(frozen=True)
 class TokenPrice:
@@ -119,3 +121,27 @@ def error_cost_to_break_even(volume: float, api_per_1k: float, fixed_monthly: fl
     if fewer_errors <= 0:
         return math.inf
     return extra_cost_per_request / fewer_errors
+
+
+@dataclass(frozen=True)
+class Option:
+    """One way to run the classifier, as a monthly bill."""
+
+    name: str
+    per_1k: float          # dollars per 1,000 requests
+    fixed_monthly: float   # dollars a month, whatever the volume
+    error_rate: float      # share of answers that are wrong
+
+    def monthly(self, volume, cost_per_error=0.0):
+        """Monthly bill; volume and cost_per_error may be arrays and are broadcast."""
+        volume = np.asarray(volume, dtype=float)
+        if np.any(volume < 0):
+            raise ValueError("volume cannot be negative")
+        return (self.fixed_monthly + volume / 1000 * self.per_1k
+                + volume * self.error_rate * np.asarray(cost_per_error, dtype=float))
+
+
+def cheapest(options, volume, cost_per_error=0.0):
+    """Position in `options` of the lowest monthly bill, for every volume and cost per error."""
+    bills = np.stack(np.broadcast_arrays(*[o.monthly(volume, cost_per_error) for o in options]))
+    return bills.argmin(axis=0)

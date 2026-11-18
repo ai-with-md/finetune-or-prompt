@@ -22,16 +22,18 @@ HIGHLIGHT = "#D4FF3F"
 APPROACH_COLORS = {
     "frozen": "#55535F",
     "finetuned": "#3B8FE0",
+    "setfit": "#2FB59B",
     "haiku": "#C4831C",
     "sonnet": "#7B68FF",
 }
 APPROACH_LABELS = {
     "frozen": "Small model, not fine-tuned",
     "finetuned": "Small model, fine-tuned",
+    "setfit": "Small model, fine-tuned on pairs (SetFit recipe)",
     "haiku": "Claude Haiku 5.5, prompted",
     "sonnet": "Claude Sonnet 5.5, prompted",
 }
-APPROACH_ORDER = ["frozen", "finetuned", "haiku", "sonnet"]
+APPROACH_ORDER = ["frozen", "finetuned", "setfit", "haiku", "sonnet"]
 PROMPTED = {"haiku", "sonnet"}  # examples go in the prompt, not into training
 
 FONT_STACK = ["Avenir Next", "Avenir", "Helvetica Neue", "DejaVu Sans"]

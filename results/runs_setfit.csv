@@ -1,0 +1,10 @@
+approach,model,n_per_class,seed,n_train,pairs,steps,C,val_acc,test_acc,train_seconds,device,date
+setfit,BAAI/bge-small-en-v1.5,5,0,385,15400,963,300.0,0.7966,0.7964,144.1,mps,2026-11-17
+setfit,BAAI/bge-small-en-v1.5,5,1,385,15400,963,300.0,0.8016,0.7997,154.0,mps,2026-11-17
+setfit,BAAI/bge-small-en-v1.5,5,2,385,15400,963,300.0,0.7886,0.787,139.4,mps,2026-11-17
+setfit,BAAI/bge-small-en-v1.5,10,0,770,30800,1925,300.0,0.8235,0.8256,251.7,mps,2026-11-17
+setfit,BAAI/bge-small-en-v1.5,10,1,770,30800,1925,300.0,0.8285,0.8295,269.3,mps,2026-11-17
+setfit,BAAI/bge-small-en-v1.5,10,2,770,30800,1925,300.0,0.8385,0.8325,293.9,mps,2026-11-17
+setfit,BAAI/bge-small-en-v1.5,25,0,1925,77000,4813,300.0,0.8754,0.8643,757.9,mps,2026-11-17
+setfit,BAAI/bge-small-en-v1.5,25,1,1925,77000,4813,300.0,0.8564,0.8578,757.1,mps,2026-11-17
+setfit,BAAI/bge-small-en-v1.5,25,2,1925,77000,4813,300.0,0.8724,0.8692,760.4,mps,2026-11-17

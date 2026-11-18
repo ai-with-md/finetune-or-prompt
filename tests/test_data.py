@@ -66,3 +66,16 @@ def test_load_split_adds_intent_names(tmp_path):
 def test_load_split_explains_missing_data(tmp_path):
     with pytest.raises(FileNotFoundError, match="download_data"):
         load_split("test", data_dir=tmp_path)
+
+
+def test_contrastive_pairs_match_and_mismatch_classes():
+    from fopstudy.data import contrastive_pairs
+
+    labels = np.array([0, 0, 1, 1, 1, 2])
+    pairs = contrastive_pairs(labels, iterations=3, seed=1)
+    pos, neg = pairs[pairs[:, 2] == 1], pairs[pairs[:, 2] == 0]
+    assert len(neg) == 3 * len(labels)
+    assert len(pos) == 3 * 5  # the single example of class 2 has no partner
+    assert (labels[pos[:, 0]] == labels[pos[:, 1]]).all() and (pos[:, 0] != pos[:, 1]).all()
+    assert (labels[neg[:, 0]] != labels[neg[:, 1]]).all()
+    assert (contrastive_pairs(labels, 3, seed=1) == pairs).all()
