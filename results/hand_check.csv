@@ -1,0 +1,40 @@
+row,verdict,better_intent
+5,ambiguous,
+11,label looks wrong,card_delivery_estimate
+138,ambiguous,
+236,ambiguous,
+246,label looks wrong,receiving_money
+264,label looks wrong,exchange_via_app
+281,label looks wrong,card_arrival
+555,ambiguous,
+666,ambiguous,
+799,label looks wrong,declined_cash_withdrawal
+812,ambiguous,
+851,ambiguous,
+873,label looks wrong,transfer_timing
+1006,label looks wrong,top_up_failed
+1038,label looks wrong,top_up_failed
+1192,label looks wrong,verify_my_identity
+1296,ambiguous,
+1331,models wrong,
+1391,ambiguous,
+1486,ambiguous,
+1519,ambiguous,
+1626,ambiguous,
+1756,label looks wrong,declined_card_payment
+1855,ambiguous,
+2092,label looks wrong,declined_card_payment
+2166,label looks wrong,transfer_into_account
+2195,label looks wrong,transfer_into_account
+2252,label looks wrong,fiat_currency_support
+2338,label looks wrong,topping_up_by_card
+2500,label looks wrong,card_payment_fee_charged
+2571,label looks wrong,exchange_charge
+2637,label looks wrong,disposable_card_limits
+2675,label looks wrong,declined_cash_withdrawal
+2694,ambiguous,
+2711,label looks wrong,pending_transfer
+2746,label looks wrong,card_payment_not_recognised
+2761,label looks wrong,exchange_rate
+2763,label looks wrong,exchange_rate
+2917,ambiguous,

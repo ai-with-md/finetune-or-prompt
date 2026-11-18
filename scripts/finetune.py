@@ -30,7 +30,7 @@ import torch
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, get_linear_schedule_with_warmup
 
 from fopstudy.data import learning_curve_subsets, load_split, validation_split
-from fopstudy.results import RESULTS_DIR, prediction_path, save_predictions
+from fopstudy.results import RESULTS_DIR, prediction_path, save_latency, save_predictions
 
 MODEL = "answerdotai/ModernBERT-base"
 REVISION = "8949b909ec900327062f0ebf497f51aef5e6f0c8"
@@ -158,8 +158,7 @@ def main():
             print(runs[-1], flush=True)
             if n == "all" and seed == 0:
                 ms = cpu_latency(model, list(test["text"][:210]))
-                pd.DataFrame({"approach": "finetuned", "ms": np.round(ms, 2)}).to_csv(
-                    RESULTS_DIR / "latency_local.csv", index=False)
+                save_latency("finetuned", ms)
                 print(f"CPU latency p50 {np.median(ms):.1f} ms, p95 {np.percentile(ms, 95):.1f} ms", flush=True)
             del model
             if DEVICE.type == "mps":

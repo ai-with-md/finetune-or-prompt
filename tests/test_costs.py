@@ -5,7 +5,8 @@ import math
 import pytest
 
 from fopstudy.costs import (PRICES, TokenPrice, api_cost_per_1k, break_even_volume,
-                            error_cost_to_break_even, monthly_cost, request_cost)
+                            error_cost_to_break_even, monthly_cost, request_cost, server_capacity,
+                            server_monthly_cost)
 
 HAIKU = PRICES["haiku"]
 SONNET = PRICES["sonnet"]
@@ -85,3 +86,12 @@ def test_error_cost_edge_cases():
 def test_custom_price():
     p = TokenPrice(input=1.0, output=2.0, cache_write=1.25, cache_read=0.1)
     assert api_cost_per_1k(p, 1000, 1000) == pytest.approx(3.0)
+
+
+def test_server_month_and_capacity():
+    assert server_monthly_cost(0.10) == pytest.approx(73.0)
+    # 10 ms a request is 100 a second: 730 hours * 3,600 seconds * 100
+    assert server_capacity(10) == pytest.approx(262_800_000)
+    assert server_capacity(10, slowdown=2, utilisation=0.5) == pytest.approx(65_700_000)
+    with pytest.raises(ValueError):
+        server_capacity(10, utilisation=0)

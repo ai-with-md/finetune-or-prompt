@@ -7,8 +7,9 @@ seconds, so this is the cheapest thing a team could try first.
 Runs in the training environment (see requirements-train.txt):
     .venv-train/bin/python scripts/frozen_baseline.py
 
-Writes test predictions to results/predictions/frozen/ and one row per run to
-results/runs_frozen.csv. Embeddings are cached in data/ (not committed).
+Writes test predictions to results/predictions/frozen/, one row per run to
+results/runs_frozen.csv, and CPU timings to results/latency_local.csv.
+Embeddings are cached in data/ (not committed).
 """
 
 import time
@@ -20,7 +21,7 @@ from sklearn.linear_model import LogisticRegression
 from transformers import AutoModel, AutoTokenizer
 
 from fopstudy.data import DATA_DIR, learning_curve_subsets, load_split, validation_split
-from fopstudy.results import RESULTS_DIR, save_predictions
+from fopstudy.results import RESULTS_DIR, save_latency, save_predictions
 
 MODEL = "BAAI/bge-small-en-v1.5"
 REVISION = "5c38ec7c405ec4b44b94cc5a9bb96e735b38267a"
@@ -53,6 +54,28 @@ def cached_embeddings(split, df):
 
 def fit(x, y, c):
     return LogisticRegression(C=c, max_iter=5000).fit(x, y)
+
+
+def cpu_latency(classifier, texts, threads=2):
+    """One message at a time on 2 CPU threads, a stand-in for a small cloud server.
+
+    Times the embedding model and the classifier together, as a request would
+    run them; tokenising is left out, as it is for the fine-tuned model.
+    """
+    previous = torch.get_num_threads()
+    torch.set_num_threads(threads)
+    tok = AutoTokenizer.from_pretrained(MODEL, revision=REVISION)
+    model = AutoModel.from_pretrained(MODEL, revision=REVISION).eval()
+    times = []
+    with torch.no_grad():
+        for text in texts:
+            batch = tok([text], truncation=True, max_length=128, return_tensors="pt")
+            start = time.perf_counter()
+            cls = model(**batch).last_hidden_state[:, 0]
+            classifier.predict(torch.nn.functional.normalize(cls, dim=-1).numpy())
+            times.append((time.perf_counter() - start) * 1000)
+    torch.set_num_threads(previous)
+    return times[10:]  # drop warm-up
 
 
 def main():
@@ -91,6 +114,10 @@ def main():
                      "train_seconds": round(seconds, 2)})
         print(runs[-1])
     pd.DataFrame(runs).to_csv(RESULTS_DIR / "runs_frozen.csv", index=False)
+
+    ms = cpu_latency(model, list(test["text"][:210]))  # the last model trained: all labels
+    save_latency("frozen", ms)
+    print(f"CPU latency p50 {np.median(ms):.1f} ms, p95 {np.percentile(ms, 95):.1f} ms")
 
 
 if __name__ == "__main__":

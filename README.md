@@ -23,10 +23,10 @@ This study measures all three on the same test messages and turns the results in
 | # | Question | Status |
 |---|---|---|
 | [01](notebooks/01_task_and_baseline.ipynb) | What does the task look like, and how far does a model with no fine-tuning get? | Done |
-| 02 | Does a fine-tuned small model beat a prompted large one on the same messages? | Next |
-| 03 | How many labelled examples does fine-tuning need to catch up? | Planned |
-| 04 | What does each option cost per 1,000 requests, and how fast is it? | Planned |
-| 05 | At what monthly volume does fine-tuning pay off, and when does the answer flip? | Planned |
+| [02](notebooks/02_finetune_vs_prompt.ipynb) | Does a fine-tuned small model beat a prompted large one on the same messages? | Done |
+| [03](notebooks/03_learning_curve.ipynb) | How many labelled examples does fine-tuning need to catch up? | Done |
+| [04](notebooks/04_cost_and_speed.ipynb) | What does each option cost per 1,000 requests, and how fast is it? | Done |
+| 05 | At what monthly volume does fine-tuning pay off, and when does the answer flip? | Next |
 
 ## How the study is run
 

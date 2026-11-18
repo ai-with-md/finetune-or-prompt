@@ -46,6 +46,31 @@ def load_predictions(approach: str, n_per_class: Size, seed: int,
     return df
 
 
+def correctness(approach: str, n_per_class: Size, seeds=(0,),
+                results_dir: Path = RESULTS_DIR) -> pd.Series:
+    """Share of the given seeds that got each message right, indexed by test row.
+
+    With one seed this is 0 or 1 per message; with three it can be 1/3 or 2/3.
+    Every seed must have scored the same messages.
+    """
+    runs = [load_predictions(approach, n_per_class, s, results_dir).set_index("row")["correct"]
+            for s in seeds]
+    if any(set(r.index) != set(runs[0].index) for r in runs):
+        raise ValueError("seeds scored different messages")
+    return pd.concat(runs, axis=1).astype(float).mean(axis=1).sort_index()
+
+
+def save_latency(approach: str, ms, results_dir: Path = RESULTS_DIR) -> Path:
+    """Replace one approach's CPU timings in latency_local.csv, keeping the others."""
+    path = Path(results_dir) / "latency_local.csv"
+    new = pd.DataFrame({"approach": approach, "ms": [round(float(m), 2) for m in ms]})
+    if path.exists():
+        old = pd.read_csv(path)
+        new = pd.concat([old[old["approach"] != approach], new], ignore_index=True)
+    new.to_csv(path, index=False)
+    return path
+
+
 def available_runs(approach: str, results_dir: Path = RESULTS_DIR) -> pd.DataFrame:
     """Every (n_per_class, seed) saved for an approach; n is an int or "all"."""
     rows = []

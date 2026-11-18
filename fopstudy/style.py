@@ -32,6 +32,7 @@ APPROACH_LABELS = {
     "sonnet": "Claude Sonnet 5.5, prompted",
 }
 APPROACH_ORDER = ["frozen", "finetuned", "haiku", "sonnet"]
+PROMPTED = {"haiku", "sonnet"}  # examples go in the prompt, not into training
 
 FONT_STACK = ["Avenir Next", "Avenir", "Helvetica Neue", "DejaVu Sans"]
 FIGURE_DIR = Path(__file__).resolve().parent.parent / "docs" / "figures"

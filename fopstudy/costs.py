@@ -36,6 +36,13 @@ PRICES = {
 # The Batch API halves every token price, and stacks with caching.
 BATCH_DISCOUNT = 0.5
 
+# A small CPU server for the self-hosted model: AWS c7g.large (2 vCPUs, 4 GB),
+# on demand in us-east-1, checked on this date. Recheck before reuse.
+SERVER_NAME = "AWS c7g.large (2 vCPUs)"
+SERVER_PER_HOUR = 0.0725
+SERVER_CHECKED = "2026-11-17"
+HOURS_PER_MONTH = 730
+
 
 def request_cost(price: TokenPrice, input_tokens: int, output_tokens: int,
                  cache_read_tokens: int = 0, cache_write_tokens: int = 0,
@@ -56,6 +63,22 @@ def api_cost_per_1k(price: TokenPrice, input_tokens: int, output_tokens: int,
     """
     return 1000 * request_cost(price, input_tokens, output_tokens,
                                cache_read_tokens=cached_tokens, batch=batch)
+
+
+def server_monthly_cost(per_hour: float = SERVER_PER_HOUR) -> float:
+    """A server that runs all month, whether or not requests arrive."""
+    return per_hour * HOURS_PER_MONTH
+
+
+def server_capacity(ms_per_request: float, slowdown: float = 1.0, utilisation: float = 1.0) -> float:
+    """Requests one server can answer in a month, one at a time.
+
+    slowdown: how many times slower the server is than where ms_per_request
+    was measured. utilisation: the share of the month it is kept busy.
+    """
+    if ms_per_request <= 0 or slowdown <= 0 or not 0 < utilisation <= 1:
+        raise ValueError("need ms_per_request > 0, slowdown > 0 and 0 < utilisation <= 1")
+    return HOURS_PER_MONTH * 3600 * 1000 / (ms_per_request * slowdown) * utilisation
 
 
 def monthly_cost(volume: float, per_1k: float = 0.0, fixed: float = 0.0,
