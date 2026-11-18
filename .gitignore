@@ -25,3 +25,6 @@ checkpoints/
 
 # Website built by scripts/build_site.py
 site/
+
+# Website built by scripts/build_site.py
+site/

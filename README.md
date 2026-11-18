@@ -8,7 +8,7 @@
 
 ![Fine-tuning passes fixed prompts at 25 to 50 labels per intent, but not prompts with retrieved examples](docs/figures/learning_curves.png)
 
-**New here?** Read the one-page [decision memo](docs/decision_memo.md) for the answer a team would act on, then [notebook 02](notebooks/02_finetune_vs_prompt.ipynb) for the result that changed the conclusion.
+**New here?** Browse the [project website](https://ai-with-md.github.io/finetune-or-prompt/), read the one-page [decision memo](docs/decision_memo.md) for the answer a team would act on, then [notebook 02](notebooks/02_finetune_vs_prompt.ipynb) for the result that changed the conclusion.
 
 ## What we found
 
@@ -88,6 +88,12 @@ The hosted models need an Anthropic API key in a `.env` file in the repo root (`
 .venv-train/bin/python scripts/run_api.py --pilot     # 50 messages, checks the prompt cache works
 .venv-train/bin/python scripts/run_api.py             # all six runs, about $3
 .venv-train/bin/python scripts/run_api.py --retrieved # two runs with each message's 10 nearest labelled examples, about $1.70
+```
+
+The website is built from this README, the notebooks and the memo, and published by GitHub Actions on every push. To build it locally (`pip install -e ".[notebooks]"` first) and open `site/index.html`:
+
+```bash
+python scripts/build_site.py
 ```
 
 ## License
